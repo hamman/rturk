@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe RTurk::Requester do
 
   before(:all) do
-    aws = YAML.load(File.open(File.join(SPEC_ROOT, 'mturk.yml')))
-    @turk = RTurk::Requester.new(aws['AWSAccessKeyId'], aws['AWSAccessKey'], :sandbox => true)
+    @aws = YAML.load(File.open(File.join(File.dirname(__FILE__),'mturk.yml')))
+    @turk = RTurk::Requester.new(@aws['AWSAccessKeyId'], @aws['AWSAccessKey'], :sandbox => true)
   end
 
   it "should perform raw operations" do
@@ -20,8 +20,7 @@ describe RTurk::Requester do
   end
   
   it "should return its environment as production, the default" do
-    aws = YAML.load(File.open(File.join(SPEC_ROOT, 'mturk.yml')))
-    @turk = RTurk::Requester.new(aws['AWSAccessKeyId'], aws['AWSAccessKey'])
+    @turk = RTurk::Requester.new(@aws['AWSAccessKeyId'], @aws['AWSAccessKey'])
     @turk.environment.should == 'production'
   end
   
